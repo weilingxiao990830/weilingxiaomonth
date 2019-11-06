@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bw.mapper.DytvDao">
+
+	<select id="getDytvList" resultType="com.bw.bean.Dytv" parameterType="map">
+		select d.*,t.tname from dytv d,type t where d.tid=t.tid 
+		<if test="dname != null and dname != ''">
+			and d.dname like concat("%",#{dname},"%")
+		</if>
+		<if test="person != null and person != ''">
+			and d.person like concat("%",#{person},"%")
+		</if>
+		<if test="dyear != null and dyear != ''">
+			and d.dyear=#{dyear}
+		</if>
+		<if test="starttime !=null and starttime != '' and endtime !=null and endtime != ''">
+			and d.startdate>=#{starttime} and d.startdate &lt;=#{endtime}
+		</if>
+		<if test="startmoney !=null and startmoney != '' and endmoney !=null and endmoney != ''">
+			and d.price>=#{startmoney} and d.price &lt;=#{endmoney}
+		</if>
+		<if test="start !=null and start != '' and end !=null and end != ''">
+			and d.ctime>=#{start} and d.ctime &lt;=#{end}
+		</if>	
+		<if test="uptime ==1">
+			ORDER BY d.startdate asc
+		</if>
+		<if test="dowtime == 0">
+			 ORDER BY d.startdate desc
+		</if>
+		<if test="cuptime ==1">
+			ORDER BY d.ctime asc
+		</if>
+		<if test="cdowtime == 0">
+			 ORDER BY d.ctime desc
+		</if>
+		<if test="duptime ==1">
+			ORDER BY d.dyear asc
+		</if>
+		<if test="ddowtime == 0">
+			 ORDER BY d.dyear desc
+		</if>
+	</select>
+
+	<delete id="delallDytv" parameterType="string">
+		
+	delete from dytv where did in (${_parameter})
+	</delete>
+
+	<update id="updatedcode" parameterType="map">
+		update dytv set dcode=#{dcode} where did=#{did}
+	</update>
+	
+	
+	<update id="updatedcodea" parameterType="map">
+		update dytv set dcode=#{dcode} where did=#{did}
+	</update>
+	
+
+</mapper>
