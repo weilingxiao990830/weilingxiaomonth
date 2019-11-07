@@ -4,6 +4,9 @@ public class Type {
 
 	private Integer tid;
 	private String tname;
+	
+	private String aaa;
+	
 	public Integer getTid() {
 		return tid;
 	}
